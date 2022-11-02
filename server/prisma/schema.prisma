@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin")
+}
+
+model Student {
+  id           Int          @id @default(autoincrement())
+  name         String
+  email        String       @unique
+  password     String
+  firstname    String
+  lastname     String
+  gender       String
+  age          String
+  contact      String
+  avatar       String
+  housenumber  String?
+  streetnumber String?
+  city         String
+  state        String?
+  postalcode   String
+  country      String
+  latitude     String
+  longitude    String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  Enrollment   Enrollment[]
+
+  @@map("students")
+}
+
+model Teacher {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  firstname    String
+  lastname     String
+  password     String
+  gender       String
+  age          String
+  contact      String
+  avatar       String   @default("profile.png")
+  housenumber  String?
+  streetnumber String?
+  city         String
+  state        String?
+  postalcode   String
+  country      String
+  latitude     String
+  longitude    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  courses      Course[]
+
+  @@map("teachers")
+}
+
+model Course {
+  id        Int      @id @default(autoincrement())
+  name      String
+  details   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacher    Teacher @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+
+  Enrollment Enrollment[]
+
+  @@map("courses")
+}
+
+model Enrollment {
+  id Int @id @default(autoincrement())
+
+  student    Student @relation(fields: [student_id], references: [id])
+  student_id Int
+  course     Course  @relation(fields: [course_id], references: [id])
+  course_id  Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("enrollments")
+}
