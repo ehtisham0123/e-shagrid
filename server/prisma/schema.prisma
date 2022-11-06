@@ -57,7 +57,7 @@ model Teacher {
   gender       String
   age          String
   contact      String
-  avatar       String   @default("profile.png")
+  avatar       String?   @default("profile.png")
   housenumber  String?
   streetnumber String?
   city         String

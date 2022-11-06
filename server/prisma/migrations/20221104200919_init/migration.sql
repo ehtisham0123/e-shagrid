@@ -47,7 +47,7 @@ CREATE TABLE "teachers" (
     "gender" TEXT NOT NULL,
     "age" TEXT NOT NULL,
     "contact" TEXT NOT NULL,
-    "avatar" TEXT NOT NULL,
+    "avatar" TEXT DEFAULT 'profile.png',
     "housenumber" TEXT,
     "streetnumber" TEXT,
     "city" TEXT NOT NULL,
